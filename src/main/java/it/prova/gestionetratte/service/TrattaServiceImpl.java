@@ -46,7 +46,7 @@ public class TrattaServiceImpl implements TrattaService{
 	@Override
 	public Tratta inserisciNuovo(Tratta trattaInstance) {
 		// TODO Auto-generated method stub
-		return null;
+		return trattaRepository.save(trattaInstance);
 	}
 
 	@Override
@@ -59,6 +59,12 @@ public class TrattaServiceImpl implements TrattaService{
 	public List<Tratta> findByExample(Tratta example) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Tratta> findByCodiceAndDescrizione(String codice, String descrizione) {
+		// TODO Auto-generated method stub
+		return trattaRepository.findByCodiceAndDescrizione(codice, descrizione);
 	}
 
 }

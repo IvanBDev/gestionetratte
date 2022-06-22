@@ -46,7 +46,7 @@ public class AirbusServiceImpl implements AirbusService{
 	@Override
 	public Airbus inserisciNuovo(Airbus airbusInstance) {
 		// TODO Auto-generated method stub
-		return null;
+		return airbusRepository.save(airbusInstance);
 	}
 
 	@Override
@@ -59,6 +59,12 @@ public class AirbusServiceImpl implements AirbusService{
 	public List<Airbus> findByExample(Airbus example) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Airbus findByCodiceAndDescrizione(String codice, String descrizione) {
+		// TODO Auto-generated method stub
+		return airbusRepository.findByCodiceAndDescrizione(codice, descrizione);
 	}
 
 }
