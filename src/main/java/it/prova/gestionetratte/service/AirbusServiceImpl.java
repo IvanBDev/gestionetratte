@@ -67,4 +67,16 @@ public class AirbusServiceImpl implements AirbusService{
 		return airbusRepository.findByCodiceAndDescrizione(codice, descrizione);
 	}
 
+	@Override
+	public List<Airbus> listAllElementsEager() {
+		// TODO Auto-generated method stub
+		return airbusRepository.findAllEager();
+	}
+
+	@Override
+	public Airbus caricaSingoloElementoConTratte(Long id) {
+		// TODO Auto-generated method stub
+		return airbusRepository.findByIdEager(id);
+	}
+
 }

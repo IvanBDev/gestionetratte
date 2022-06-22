@@ -22,4 +22,8 @@ public interface AirbusService {
 	
 	Airbus findByCodiceAndDescrizione(String codice, String descrizione);
 	
+	List<Airbus> listAllElementsEager();
+
+	Airbus caricaSingoloElementoConTratte(Long id);
+	
 }
