@@ -10,7 +10,7 @@ public interface TrattaService {
 
 	Tratta caricaSingoloElemento(Long id);
 
-	Tratta caricaSingoloElementoEager(Long id);
+	Tratta caricaSingoloElementoConAirbus(Long id);
 
 	Tratta aggiorna(Tratta trattaInstance);
 

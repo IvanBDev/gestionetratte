@@ -75,7 +75,7 @@ public class AirbusServiceImpl implements AirbusService{
 			paramaterMap.put("dataInizioServizio", example.getDataInizioServizio());
 		}
 		if (example.getNumeroPasseggeri() != null && example.getNumeroPasseggeri() > 1) {
-			whereClauses.add(" a.numeroPasseggeri = :numeroPasseggeri ");
+			whereClauses.add(" a.numeroPasseggeri >= :numeroPasseggeri ");
 			paramaterMap.put("numeroPasseggeri", example.getNumeroPasseggeri());
 		}
 		
