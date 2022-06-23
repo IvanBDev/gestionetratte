@@ -1,6 +1,5 @@
 package it.prova.gestionetratte.web.api;
 
-import java.time.LocalTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -92,19 +91,18 @@ public class TrattaController {
 				true);
 	}
 	
-	/*@GetMapping("/concludiTratte")
-	public List<TrattaDTO> concludiTratte(@PathVariable(value = "id", required = true) long id) {
-		List<TrattaDTO> listaTratte = TrattaDTO.createTratteDTOListFromModelList(trattaService.listAllElements(false), false);
+	@GetMapping("/concludiTratte")
+	public boolean concludiTratte() {
 		
-		for (TrattaDTO trattaDTOItem : listaTratte) {
-			if(trattaDTOItem.getOraAtterraggio().isBefore(LocalTime.now()) && trattaDTOItem.getStato() == Stato.ATTIVA) {
-				trattaDTOItem.setStato(Stato.CONCLUSA);
-				trattaService.aggiorna(trattaDTOItem.buildTrattaModel());
-			}
+		if(trattaService.concludiTratte()) {
+			return true;
+			
+		}
+		else {
+			return false;
+			
 		}
 		
-		return listaTratte;
-		
-	}*/
+	}
 
 }

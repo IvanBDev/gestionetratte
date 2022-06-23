@@ -22,4 +22,6 @@ public interface TrattaService {
 	
 	List<Tratta> findByCodiceAndDescrizione(String codice, String descrizione);
 	
+	boolean concludiTratte();
+	
 }

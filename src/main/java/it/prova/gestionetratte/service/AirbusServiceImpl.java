@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.repository.AirbusRepository;
@@ -25,36 +26,42 @@ public class AirbusServiceImpl implements AirbusService{
 	private EntityManager entityManager;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Airbus> listAllElements(boolean eager) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Airbus caricaSingoloElemento(Long id) {
 		// TODO Auto-generated method stub
 		return airbusRepository.findById(id).orElse(null);
 	}
 
 	@Override
+	@Transactional
 	public Airbus aggiorna(Airbus airbusInstance) {
 		// TODO Auto-generated method stub
 		return airbusRepository.save(airbusInstance);
 	}
 
 	@Override
+	@Transactional
 	public Airbus inserisciNuovo(Airbus airbusInstance) {
 		// TODO Auto-generated method stub
 		return airbusRepository.save(airbusInstance);
 	}
 
 	@Override
+	@Transactional
 	public void rimuovi(Airbus airbusInstance) {
 		// TODO Auto-generated method stub
 		airbusRepository.delete(airbusInstance);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Airbus> findByExample(Airbus example) {
 		// TODO Auto-generated method stub
 		Map<String, Object> paramaterMap = new HashMap<String, Object>();
@@ -91,18 +98,21 @@ public class AirbusServiceImpl implements AirbusService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Airbus findByCodiceAndDescrizione(String codice, String descrizione) {
 		// TODO Auto-generated method stub
 		return airbusRepository.findByCodiceAndDescrizione(codice, descrizione);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Airbus> listAllElementsEager() {
 		// TODO Auto-generated method stub
 		return airbusRepository.findAllEager();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Airbus caricaSingoloElementoConTratte(Long id) {
 		// TODO Auto-generated method stub
 		return airbusRepository.findByIdEager(id);
