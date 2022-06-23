@@ -24,4 +24,6 @@ public interface AirbusService {
 
 	Airbus caricaSingoloElementoConTratte(Long id);
 	
+	List<Airbus> airbusConSovrapposizioni();
+	
 }

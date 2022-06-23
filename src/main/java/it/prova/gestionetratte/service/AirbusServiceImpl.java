@@ -29,7 +29,10 @@ public class AirbusServiceImpl implements AirbusService{
 	@Transactional(readOnly = true)
 	public List<Airbus> listAllElements(boolean eager) {
 		// TODO Auto-generated method stub
-		return null;
+		if(eager)
+			return (List<Airbus>) airbusRepository.findAllEager();
+		
+		return (List<Airbus>) airbusRepository.findAll();
 	}
 
 	@Override
@@ -116,6 +119,13 @@ public class AirbusServiceImpl implements AirbusService{
 	public Airbus caricaSingoloElementoConTratte(Long id) {
 		// TODO Auto-generated method stub
 		return airbusRepository.findByIdEager(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Airbus> airbusConSovrapposizioni() {
+		// TODO Auto-generated method stub
+		return airbusRepository.airbusConSovrapposizioni();
 	}
 
 }

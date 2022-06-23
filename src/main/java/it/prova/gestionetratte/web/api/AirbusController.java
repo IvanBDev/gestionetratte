@@ -1,6 +1,8 @@
 package it.prova.gestionetratte.web.api;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -91,6 +93,28 @@ public class AirbusController {
 	public List<AirbusDTO> search(@RequestBody AirbusDTO example) {
 		return AirbusDTO.createAirbusDTOListFromModelList(airbusService.findByExample(example.buildAirbusModel()),
 				false);
+	}
+	
+	@GetMapping("/listaAirbusEvidenziandoSovrapposizioni")
+	public List<AirbusDTO> airbusConSopvrapposizioni(){
+		List<Airbus> listaAirbus = airbusService.listAllElements(false);
+		List<Airbus> listaConSovrapposizioni = airbusService.airbusConSovrapposizioni();
+		
+		Set<Long> idListaConSovrapposizioni = new HashSet<Long>(0);
+		for (Airbus airbusItem : listaConSovrapposizioni) {
+			idListaConSovrapposizioni.add(airbusItem.getId());
+		}
+		
+		List<AirbusDTO> result = AirbusDTO.createAirbusDTOListFromModelList(listaAirbus, false);
+		for (AirbusDTO airbusDTOItem : result) {
+			if(idListaConSovrapposizioni.contains(airbusDTOItem.getId())) {
+				airbusDTOItem.setConSovrapposizioni(true);
+			}
+		}
+		
+		return result;
+		
+		
 	}
 
 }
