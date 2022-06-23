@@ -1,9 +1,14 @@
 package it.prova.gestionetratte.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,19 +33,13 @@ public class AirbusServiceImpl implements AirbusService{
 	@Override
 	public Airbus caricaSingoloElemento(Long id) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Airbus caricaSingoloElementoEager(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return airbusRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Airbus aggiorna(Airbus airbusInstance) {
 		// TODO Auto-generated method stub
-		return null;
+		return airbusRepository.save(airbusInstance);
 	}
 
 	@Override
@@ -52,13 +51,43 @@ public class AirbusServiceImpl implements AirbusService{
 	@Override
 	public void rimuovi(Airbus airbusInstance) {
 		// TODO Auto-generated method stub
-		
+		airbusRepository.delete(airbusInstance);
 	}
 
 	@Override
 	public List<Airbus> findByExample(Airbus example) {
 		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> paramaterMap = new HashMap<String, Object>();
+		List<String> whereClauses = new ArrayList<String>();
+
+		StringBuilder queryBuilder = new StringBuilder("SELECT a FROM Airbus a WHERE a.id = a.id ");
+
+		if (StringUtils.isNotEmpty(example.getCodice())) {
+			whereClauses.add(" a.codice  LIKE :codice ");
+			paramaterMap.put("codice", "%" + example.getCodice() + "%");
+		}
+		if (StringUtils.isNotEmpty(example.getDescrizione())) {
+			whereClauses.add(" a.descrizione LIKE :descrizione ");
+			paramaterMap.put("descrizione", "%" + example.getDescrizione() + "%");
+		}
+		if (example.getDataInizioServizio() != null) {
+			whereClauses.add("a.dataInizioServizio >= :dataInizioServizio ");
+			paramaterMap.put("dataInizioServizio", example.getDataInizioServizio());
+		}
+		if (example.getNumeroPasseggeri() != null && example.getNumeroPasseggeri() > 1) {
+			whereClauses.add(" a.numeroPasseggeri = :numeroPasseggeri ");
+			paramaterMap.put("numeroPasseggeri", example.getNumeroPasseggeri());
+		}
+		
+		queryBuilder.append(!whereClauses.isEmpty()?" and ":"");
+		queryBuilder.append(StringUtils.join(whereClauses, " and "));
+		TypedQuery<Airbus> typedQuery = entityManager.createQuery(queryBuilder.toString(), Airbus.class);
+
+		for (String key : paramaterMap.keySet()) {
+			typedQuery.setParameter(key, paramaterMap.get(key));
+		}
+
+		return typedQuery.getResultList();
 	}
 
 	@Override
